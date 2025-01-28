@@ -1,7 +1,5 @@
 from selenium.webdriver.support.wait import WebDriverWait
-from pages.base_page import search_button_selector
-from pages.main_page import MainPage, BasePage, featured_element_selector, \
-    banner_dat_left_selector, banner_dat_right_selector, carousel_selector
+from pages.main_page import MainPage, BasePage
 
 # 1. Проверка тайтла на главной странице
 def test_check_title(browser):
@@ -11,23 +9,24 @@ def test_check_title(browser):
 # 2. Проверка наличия элемента Featured на главной странице
 def test_check_element_featured(browser):
     MainPage(browser).open_url()
-    assert MainPage(browser).find(featured_element_selector).is_displayed
+    assert MainPage(browser).find(MainPage.FEATURED_ELEMENT_SELECTOR).is_displayed
 
 # 3. Проверка наличия кнопки Корзина на главной странице
 def test_check_button_basket(browser):
     MainPage(browser).open_url()
-    assert BasePage(browser).get_button_basket().is_displayed()
+    element = BasePage(browser).find(BasePage.BASKET_BUTTON)
+    assert element.is_displayed()
 
 # 4. Проверка наличия кнопки Поиск на главной странице
 def test_check_button_search(browser):
     MainPage(browser).open_url()
-    assert MainPage(browser).find(search_button_selector).is_displayed()
+    assert MainPage(browser).find(BasePage.SEARCH_BUTTON).is_displayed()
 
 # 5. Проверка наличия кнопок баннера-карусели
 def test_check_elements_banner(browser):
     MainPage(browser).open_url()
-    assert MainPage(browser).find(banner_dat_left_selector).is_displayed()
-    assert MainPage(browser).find(banner_dat_right_selector).is_displayed()
+    assert MainPage(browser).find(MainPage.BANNER_DAT_LEFT_SELECTOR).is_displayed()
+    assert MainPage(browser).find(MainPage.BANNER_DAT_RIGHT_SELECTOR).is_displayed()
 
 # 6. Проверка работоспособности карусели на главной странице
 def test_check_element_carousel(browser):
@@ -37,7 +36,7 @@ def test_check_element_carousel(browser):
 
     # Функция проверяет, изменился ли класс элемента
     def check_class_change(browser):
-        current_class = MainPage(browser).find_change_carousel(carousel_selector).get_attribute("class")
+        current_class = MainPage(browser).find_change_carousel(MainPage.CAROUSEL_SELECTOR).get_attribute("class")
         return current_class != initial_class
 
     WebDriverWait(browser, 5).until(check_class_change) #Ожидаем изменения значения атрибута class
