@@ -1,5 +1,6 @@
 from pages.administration_page import AdminPage
 
+
 #1. Проверка наличия инпута Username на странице Administration
 def test_check_input_username_admin_page(browser):
     AdminPage(browser).open_url()

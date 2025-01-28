@@ -8,6 +8,7 @@ from pages.product_cart_page import ProductCartPage
 from pages.administration_page import AdminPage
 from pages.register_accaunt_page import RegisterPage
 
+
 # 1. Проверка, что при переключении валют цены на товары меняются
 def test_change_currency(browser):
     CatalogPage(browser).open_url()

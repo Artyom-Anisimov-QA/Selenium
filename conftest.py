@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
+
 # _________________.addoption______________________
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome")

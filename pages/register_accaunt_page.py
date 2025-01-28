@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from helpers import generate_random_user
 from pages.base_page import BasePage
 
+
 # Класс страницы
 class RegisterPage(BasePage):
     # Локаторы страницы
@@ -21,6 +22,7 @@ class RegisterPage(BasePage):
 
     def __init__(self, browser):
         super().__init__(browser) # передаём browser родительскому классу
+
 
     # Метод открывает url страницы в браузере
     @allure.step("Opening URL: http://192.168.0.144:8081/en-gb?route=account/register")
@@ -138,11 +140,13 @@ class RegisterPage(BasePage):
         self.logger.debug("Getting the subscribe checkbox element.")
         return self.find_clickable(self.CHECKBOX_SUBSCRIBE)
 
+
     # Метод ищет элемент checkbox_policy
     @allure.step("Getting the policy checkbox element")
     def get_element_checkbox_policy(self):
         self.logger.debug("Getting the policy checkbox element.")
         return self.find_clickable(self.CHECKBOX_POLICY)
+
 
     # Метод ищет элемент кнопку continue
     @allure.step("Getting the continue button element")

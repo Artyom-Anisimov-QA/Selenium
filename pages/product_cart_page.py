@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
+
 # Класс страницы
 class ProductCartPage(BasePage):
     # Локаторы страницы
@@ -212,6 +213,7 @@ class ProductCartPage(BasePage):
         if empty_basket_element is not None:
             self.logger.info("%s: Successfully found empty cart-shopping element." % self.class_name)
         return empty_basket_element
+
 
     # Метод кликает по элементу 'Checkout'
     @allure.step("Clicking  button CHECKOUT")

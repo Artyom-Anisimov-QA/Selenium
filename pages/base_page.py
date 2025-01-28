@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 class BasePage:
     # Описание локаторов
     PRICE_MACBOOK_US_DOLLAR = (By.XPATH, '//*[@id="content"]/div[2]/div[1]/div/div[2]/div/div/span[1]')
@@ -200,7 +201,6 @@ class BasePage:
         button.click()
         if button is not None:
             self.logger.info("%s: Found Сart_shopping." % self.class_name)
-#        return button
 
 
     # Метод ищет модальное окно

@@ -2,6 +2,7 @@ import allure
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
+
 # Класс страницы
 class CheckoutPage(BasePage):
     # Локаторы страницы

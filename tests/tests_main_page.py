@@ -1,6 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.main_page import MainPage, BasePage
 
+
 # 1. Проверка тайтла на главной странице
 def test_check_title(browser):
     MainPage(browser).open_url()

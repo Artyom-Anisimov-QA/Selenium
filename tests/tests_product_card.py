@@ -2,6 +2,7 @@ from pages.base_page import BasePage
 from pages.main_page import MainPage
 from pages.product_cart_page import ProductCartPage
 
+
 # 1. Проверка тайтла в карточке товара
 def test_check_title(browser):
     ProductCartPage(browser).open_url()
