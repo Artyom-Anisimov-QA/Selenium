@@ -59,19 +59,12 @@ def test_check_login_logout_admin_page(browser):
     AdminPage(browser).sing_out()
     assert WebDriverWait(browser, 3).until(EC.title_is('Administration'))
 
-# 6. Добавление нового товара в разделе администратора
+# 6. Добавление/удаление нового товара в разделе администратора
 def test_add_new_product(browser):
     AdminPage(browser).open_url()
     AdminPage(browser).sing_in() # авторизуемся в админке
     AdminPage(browser).open_menu_products() # открываем меню Products
-    AdminPage(browser).add_new_product()
-
-# 7. Удаление товара из списка в разделе администратора
-def test_delete_product(browser):
-    AdminPage(browser).open_url()
-    AdminPage(browser).sing_in() # авторизуемся в админке
-    AdminPage(browser).open_menu_products() # открываем меню Products
-    AdminPage(browser).delete_product()
+    AdminPage(browser).test_add_and_delete_product()
 
 # 8. Регистрация нового пользователя в магазине opencart
 def test_register_new_user(browser):

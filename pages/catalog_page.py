@@ -37,6 +37,7 @@ class CatalogPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Failed to open URL",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Методы для страницы
@@ -195,6 +196,7 @@ class CatalogPage(BasePage):
                 name=f"Unexpected error: {xpath}",
                 body=self.browser.get_screenshot_as_png(),
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Неизвестная ошибка при проверке элемента #{i}: {e}")
 
 
     # Метод получает выпадающий список валюты

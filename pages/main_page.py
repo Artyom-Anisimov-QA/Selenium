@@ -28,6 +28,7 @@ class MainPage(BasePage):
             self.logger.info("%s: Successfully opened URL: %s" % (self.class_name, url))
         except Exception as e:
             self.logger.error("%s: Failed to open URL: %s. Error: %s" % (self.class_name, url, str(e)))
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Методы для страницы
@@ -46,7 +47,7 @@ class MainPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error selecting product",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error selecting product. Error: {e}")
 
     # Метод находит элемент камеры на странице
     @allure.step("Finding camera element on page")
@@ -62,7 +63,7 @@ class MainPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name=f"Error finding {self.CAMERA_ELEMENT_SELECTOR} element",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error finding {self.CAMERA_ELEMENT_SELECTOR} element. Error: {e}")
 
 
     # Метод находит ожидаемый текст элемента
@@ -79,7 +80,7 @@ class MainPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error finding expected text in basket",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error finding expected text in basket. Error: {e}")
 
 
     # Метод ищет элемент карусели на странице
@@ -96,7 +97,7 @@ class MainPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error finding carousel element",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error finding carousel element. Error: {e}")
 
 
     # Метод ожидает изменения атрибута элемента карусели
@@ -113,4 +114,4 @@ class MainPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error waiting for carousel element attribute change",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error waiting for carousel element attribute change. Error: {e}")

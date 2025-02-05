@@ -20,6 +20,7 @@ class CheckoutPage(BasePage):
             self.logger.info("%s: Successfully opened URL: %s" % (self.class_name, url))
         except Exception as e:
             self.logger.error("%s: Failed to open URL: %s. Error: %s" % (self.class_name, url, str(e)))
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Метод получает кнопку подтверждения заказа
@@ -39,4 +40,4 @@ class CheckoutPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error finding confirm order button",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error finding confirm order button: {e}")
