@@ -1,5 +1,6 @@
 from pages.catalog_page import CatalogPage
 
+
 # 1. Проверка наличия элемента счётчик в каталоге
 def test_check_element_counter(browser):
     CatalogPage(browser).open_url()

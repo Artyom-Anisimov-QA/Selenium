@@ -1,5 +1,6 @@
 from pages.register_accaunt_page import RegisterPage
 
+
 #1. Проверка тайтла на странице Register Account
 def test_check_title_register_account(browser):
     RegisterPage(browser).open_url()

@@ -1,6 +1,7 @@
 import random
 from string import ascii_letters, digits
 
+
 def generate_random_user():
     first_name = ''.join(random.choice(ascii_letters) for _ in range(9))
     last_name = ''.join(random.choice(ascii_letters) for _ in range(9))
