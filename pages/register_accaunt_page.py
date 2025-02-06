@@ -37,8 +37,8 @@ class RegisterPage(BasePage):
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="screenshot",
-                attachment_type=allure.attachment_type.PNG
-            )
+                attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Методы для страницы
@@ -130,8 +130,8 @@ class RegisterPage(BasePage):
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="screenshot",
-                attachment_type=allure.attachment_type.PNG
-            )
+                attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error!!! New user is not created. Error: {e}")
 
 
     # Метод ищет элемент checkbox_subscribe

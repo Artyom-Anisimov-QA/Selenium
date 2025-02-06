@@ -40,6 +40,7 @@ class ProductCartPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="screenshot",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Методы для страницы
@@ -110,6 +111,7 @@ class ProductCartPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error opening product specification",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error opening product specification: {e}")
 
 
     # Метод получает отзывы о товаре
@@ -127,6 +129,7 @@ class ProductCartPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error opening product reviews",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error opening product reviews: {e}")
 
 
     # Метод проверяет список характеристик товара
@@ -165,6 +168,7 @@ class ProductCartPage(BasePage):
                 name=f"Unexpected error: {xpath}",
                 body=self.browser.get_screenshot_as_png(),
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Неизвестная ошибка при проверке элемента #{i}: {e}")
 
 
     # Метод проверяет список меток для отзывов
@@ -203,6 +207,8 @@ class ProductCartPage(BasePage):
                 name=f"Unexpected error: {xpath}",
                 body=self.browser.get_screenshot_as_png(),
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Неизвестная ошибка при проверке элемента #{i}: {e}")
+
 
 
     # Метод получает пустую корзину
@@ -229,3 +235,4 @@ class ProductCartPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error clicking on CHECKOUT button",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error clicking on CHECKOUT button. Error: {e}")

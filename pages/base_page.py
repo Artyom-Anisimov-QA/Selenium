@@ -40,55 +40,63 @@ class BasePage:
             element = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located(*args))
             self.logger.info("%s: Successfully found element: %s" % (self.class_name, args))
             return element
+
         except InvalidSelectorException as ise:
             self.logger.critical("%s: Invalid selector used: %s. Error: %s" % (self.class_name, args, str(ise)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Invalid selector used",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise InvalidSelectorException(f"Invalid selector used: {args}. Error: {ise}")
+
         except NoSuchElementException as nsee:
             self.logger.error("%s: No such element found: %s. Error: %s" % (self.class_name, args, str(nsee)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No such element found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoSuchElementException(f"No such element found: {args}. Error: {nsee}")
+
         except StaleElementReferenceException as sere:
             self.logger.error("%s: Stale element reference: %s. Error: %s" % (self.class_name, args, str(sere)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Stale element reference",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise StaleElementReferenceException(f"Stale element reference: {args}. Error: {sere}")
+
         except TimeoutException as te:
             self.logger.error("%s: Element not found within timeout: %s. Error: %s" % (self.class_name, args, str(te)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Element not found within timeout",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise TimeoutException(f"Element not found within timeout: {args}. Error: {te}")
+
         except ElementNotVisibleException as enve:
             self.logger.error("%s: Element not visible: %s. Error: %s" % (self.class_name, args, str(enve)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Element not visible",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise ElementNotVisibleException(f"Element not visible: {args}. Error: {enve}")
+
         except ElementNotSelectableException as ense:
             self.logger.error("%s: Element not selectable: %s. Error: %s" % (self.class_name, args, str(ense)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Element not selectable",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise ElementNotSelectableException(f"Element not selectable: {args}. Error: {ense}")
+
         except NoAlertPresentException as nap:
             self.logger.error("%s: No alert present when expected. Error: %s" % (self.class_name, str(nap)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No alert present when expected",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoAlertPresentException(f"No alert present when expected. Error: {nap}")
+
         except NoSuchWindowException as nswe:
             self.logger.error("%s: No such window found. Error: %s" % (self.class_name, str(nswe)))
             allure.attach(
@@ -96,86 +104,98 @@ class BasePage:
                 name="No such window found",
                 attachment_type=allure.attachment_type.PNG)
             return None
+
         except NoSuchFrameException as nsfe:
             self.logger.error("%s: No such frame found. Error: %s" % (self.class_name, str(nsfe)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No such frame found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoSuchFrameException(f"No such frame found. Error: {nsfe}")
 
 
     # Метод ищет кликабельные элементы на странице
-    @allure.step("Finding clickable element element: {args}")
+    @allure.step("Finding clickable element: {args}")
     def find_clickable(self, *args):
         self.logger.debug("%s: Finding clickable element: %s" % (self.class_name, args))
         try:
             element = WebDriverWait(self.browser, 10).until(EC.element_to_be_clickable(*args))
             self.logger.info("%s: Successfully found clickable element: %s" % (self.class_name, args))
             return element
+
         except InvalidSelectorException as ise:
             self.logger.critical("%s: Invalid selector used: %s. Error: %s" % (self.class_name, args, str(ise)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Invalid selector used",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise InvalidSelectorException(f"Invalid selector used: {args}. Error: {ise}")
+
         except NoSuchElementException as nsee:
-            self.logger.error("%s: No such сlickable element found: %s. Error: %s" % (self.class_name, args, str(nsee)))
+            self.logger.error("%s: No such clickable element found: %s. Error: %s" % (self.class_name, args, str(nsee)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
-                name="No such сlickable element found",
+                name="No such clickable element found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoSuchElementException(f"No such clickable element found: {args}. Error: {nsee}")
+
         except StaleElementReferenceException as sere:
-            self.logger.error("%s: Stale сlickable element reference: %s. Error: %s" % (self.class_name, args, str(sere)))
+            self.logger.error(
+                "%s: Stale clickable element reference: %s. Error: %s" % (self.class_name, args, str(sere)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
-                name="Stale сlickable element reference",
+                name="Stale clickable element reference",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise StaleElementReferenceException(f"Stale clickable element reference: {args}. Error: {sere}")
+
         except TimeoutException as te:
             self.logger.error("%s: Clickable element not found: %s. Error: %s" % (self.class_name, args, str(te)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Clickable element not found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise TimeoutException(f"Clickable element not found: {args}. Error: {te}")
+
         except ElementNotVisibleException as enve:
             self.logger.error("%s: Clickable element not visible: %s. Error: %s" % (self.class_name, args, str(enve)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Clickable element not visible",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise ElementNotVisibleException(f"Clickable element not visible: {args}. Error: {enve}")
+
         except ElementNotSelectableException as ense:
-            self.logger.error("%s: Clickable element not selectable: %s. Error: %s" % (self.class_name, args, str(ense)))
+            self.logger.error(
+                "%s: Clickable element not selectable: %s. Error: %s" % (self.class_name, args, str(ense)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="Clickable element not selectable",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise ElementNotSelectableException(f"Clickable element not selectable: {args}. Error: {ense}")
+
         except NoAlertPresentException as nap:
             self.logger.error("%s: No alert present when expected. Error: %s" % (self.class_name, str(nap)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No alert present when expected",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoAlertPresentException(f"No alert present when expected. Error: {nap}")
+
         except NoSuchWindowException as nswe:
             self.logger.error("%s: No such window found. Error: %s" % (self.class_name, str(nswe)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No such window found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoSuchWindowException(f"No such window found. Error: {nswe}")
+
         except NoSuchFrameException as nsfe:
             self.logger.error("%s: No such frame found. Error: %s" % (self.class_name, str(nsfe)))
             allure.attach(
                 self.browser.get_screenshot_as_png(),
                 name="No such frame found",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise NoSuchFrameException(f"No such frame found. Error: {nsfe}")
 
 
     # Клик по элементу с использованием ActionChains
@@ -191,6 +211,7 @@ class BasePage:
                 self.browser.get_screenshot_as_png(),
                 name="Cannot click on None element",
                 attachment_type=allure.attachment_type.PNG)
+
 
 
     # Ищет кнопку 'Корзина' на странице
@@ -217,7 +238,7 @@ class BasePage:
                 self.browser.get_screenshot_as_png(),
                 name="Error finding modal window",
                 attachment_type=allure.attachment_type.PNG)
-            return None
+            raise Exception(f"Error finding modal window: Error: {e}")
 
 
     # Метод ожидает исчезновения всплывающего окна
@@ -229,9 +250,10 @@ class BasePage:
             try:
                 WebDriverWait(self.browser, 10).until(EC.staleness_of(old_element))
                 self.logger.info("%s: Popup window has disappeared." % self.class_name)
-            except TimeoutException:
+            except TimeoutException as te:
                 self.logger.error("%s: Popup window did not disappear in time." % self.class_name)
                 allure.attach(
                     self.browser.get_screenshot_as_png(),
                     name="Popup window did not disappear in time",
                     attachment_type=allure.attachment_type.PNG)
+                raise TimeoutException(f"Popup window did not disappear in time: Error: {te}")

@@ -61,6 +61,7 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Failed to open URL",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Failed to open URL: {url}. Error: {e}")
 
 
     # Методы для страницы
@@ -82,6 +83,7 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error during sign in",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error during sign in: Error: {e}")
 
 
     # Метод разлогина из админки
@@ -98,6 +100,7 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error during sign out",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error during sign out: Error: {e}")
 
 
     # Метод открывает меню для добавления нового продукта
@@ -115,6 +118,8 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error opening products menu",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error opening products menu: Error: {e}")
+
 
 
     # Метод открывает список пользователей opencart
@@ -132,6 +137,7 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="Error opening customer list",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error opening customer list: Error: {e}")
 
 
     # Метод поиска пользователя
@@ -174,6 +180,7 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="assertion_error_screenshot",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Expected email does not match found email")
 
         except Exception as e:
             # Логирование и прикрепление скриншота при других ошибках
@@ -182,13 +189,18 @@ class AdminPage(BasePage):
                 self.browser.get_screenshot_as_png(),
                 name="error_screenshot",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error searching for customer: Error: {e}")
 
 
-    # Метод добавления нового продукта в Products
-    @allure.step("Adding a new product")
-    def add_new_product(self):
-        self.logger.debug("%s: Starting the process of adding a new product." % self.class_name)
+    # Метод добавления и удаления нового продукта в Products
+    @allure.step("Adding and deleting a product")
+    def test_add_and_delete_product(self):
+        self.logger.info("Starting the process of adding and deleting a product.")
+
         try:
+            # Добавление нового продукта
+            self.logger.debug("%s: Starting the process of adding a new product." % self.class_name)
+
             # Установка масштаба страницы
             self.browser.execute_script("document.body.style.zoom='70%'")
             self.logger.info("%s: Page zoom set to 70%%." % self.class_name)
@@ -245,30 +257,12 @@ class AdminPage(BasePage):
             with allure.step("Checking for success alert"):
                 expected = WebDriverWait(self.browser, 5).until(EC.visibility_of_element_located(self.EXCEPTION_ALERT))
                 assert expected.text == 'Success: You have modified products!'
-                self.logger.info("%s: Product added successfully. Alert message received: '%s'" % (self.class_name, expected.text))
+                self.logger.info(
+                    "%s: Product added successfully. Alert message received: '%s'" % (self.class_name, expected.text))
 
-        except AssertionError:
-            # Логирование и прикрепление скриншота при ошибке AssertionError
-            self.logger.error("%s: Product addition failed. Expected alert message not received." % self.class_name)
-            allure.attach(
-                self.browser.get_screenshot_as_png(),
-                name="assertion_error_screenshot",
-                attachment_type=allure.attachment_type.PNG)
+            # Удаление продукта
+            self.logger.info("Starting the process of deleting a product.")
 
-        except Exception as e:
-            # Логирование и прикрепление скриншота при других ошибках
-            self.logger.error("%s: Error adding new product. Error: %s" % (self.class_name, str(e)))
-            allure.attach(
-                self.browser.get_screenshot_as_png(),
-                name="error_screenshot",
-                attachment_type=allure.attachment_type.PNG)
-
-
-# Метод удаления продукта из списка Products
-    @allure.step("Deleting a product")
-    def delete_product(self):
-        self.logger.info("Starting the process of deleting a product.")
-        try:
             # Установка масштаба страницы
             self.browser.execute_script("document.body.style.zoom='75%'")
             self.logger.debug("Set page zoom to 75%.")
@@ -322,10 +316,21 @@ class AdminPage(BasePage):
                 WebDriverWait(self.browser, 10).until(
                     EC.text_to_be_present_in_element(self.EXCEPTION_ELEMENT, 'No results!'))
 
-        except Exception as e:
-            # Логирование и прикрепление скриншота при ошибке
-            self.logger.error(f"Error while deleting product: {str(e)}")
+        except AssertionError:
+            # Логирование и прикрепление скриншота при ошибке AssertionError
+            self.logger.error(
+                "%s: Product addition or deletion failed. Expected alert message not received." % self.class_name)
             allure.attach(
                 self.browser.get_screenshot_as_png(),
-                name="deletion_error_screenshot",
+                name="assertion_error_screenshot",
                 attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Product addition or deletion failed. Expected alert message not received")
+
+        except Exception as e:
+            # Логирование и прикрепление скриншота при других ошибках
+            self.logger.error("%s: Error adding or deleting new product. Error: %s" % (self.class_name, str(e)))
+            allure.attach(
+                self.browser.get_screenshot_as_png(),
+                name="error_screenshot",
+                attachment_type=allure.attachment_type.PNG)
+            raise Exception(f"Error adding or deleting new product: Error: {e}")
